@@ -1,26 +1,20 @@
 // src/components/Login.tsx
-import { config } from '@/config';
-import { useLoginMutation } from '@/services/auth.service';
+import { useAuth } from '@/hooks/useAuth';
 import React, { useState } from 'react';
-import { RiMailLine, RiGitRepositoryPrivateLine } from 'react-icons/ri'
+import { RiGitRepositoryPrivateLine, RiMailLine } from 'react-icons/ri';
 
 const Login: React.FC = () => {
-  const loginMutation = useLoginMutation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const { login } = useAuth()
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      const response = await loginMutation.mutateAsync({ username, password });
-      if (response.token) {
-        localStorage.setItem(config.TOKEN_STORAGE, response.token);
-        console.log('Login successful! Token stored in localStorage.');
-      }
-      console.log(response);
-
-    } catch (error) {
+      login(username, password)
+    } catch (error: any) {
       console.error('Error during login:', error);
+      console.log('Error details:', error.response);
     }
   };
 
@@ -55,12 +49,10 @@ const Login: React.FC = () => {
               <RiGitRepositoryPrivateLine className="w-5 h-5 absolute left-2 top-[50%] -translate-y-[50%] text-blue-500" />
             </div>
             <div>
-              <button
+              <input
                 type="submit"
                 className="w-full bg-primary py-2 px-4 text-white rounded-md hover:bg-blue-600 transition-colors"
-              >
-                Iniciar sesión
-              </button>
+              />
             </div>
           </form>
         </div>

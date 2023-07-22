@@ -1,6 +1,8 @@
+import { config } from "@/config";
+import { useAuth } from "@/hooks/useAuth";
 import React from "react";
 import { RiBriefcaseLine, RiCloseLine, RiDashboardLine, RiLogoutBoxRLine, RiMenu3Fill } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface Props {
   children: JSX.Element | JSX.Element[]
@@ -56,12 +58,22 @@ export const Sidebar: React.FC<Props> = ({ children }) => {
       >
         {sidebar ? <RiCloseLine /> : <RiMenu3Fill />}
       </button>
-      { children }
+      <div className="px-16 pt-10 lg:col-span-5">
+        { children }
+      </div>
     </div>
   );
 }
 
 function Reminder() {
+  const {logout} = useAuth()
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    logout()
+    navigate(config.ROUTE.LOGIN)
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <img src="./img/sidebar.svg" alt="Image" />
@@ -71,7 +83,10 @@ function Reminder() {
           Toda informacion mostrada en las tablas es confidencial.
         </p>
       </div>
-      <Option name="Cerrar Sesión" to="" icon={<RiLogoutBoxRLine/>} />
+      <button onClick={handleLogout} className="flex items-center gap-4 hover:bg-primary hover:bg-opacity-70 p-4 text-gray-400 hover:text-white rounded-lg transition-colors font-semibold">
+        <RiLogoutBoxRLine/>
+        Cerrar Sesión
+      </button>
     </div>
   )
 }

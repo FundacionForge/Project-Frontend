@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { config } from '@/config';
-import { loginUser } from '@/services/auth.service';
+import { useLoginMutation } from '@/services/auth.service';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   children: JSX.Element | JSX.Element[]
 }
 
 type AuthContextData = {
-  isAuthenticated: boolean;
-  login: (username: string, password: string) => void;
-  logout: () => void;
+  isAuthenticated:  boolean;
+  login:            (username: string, password: string) => void;
+  logout:           () => void;
 };
 
 export const AuthContext = React.createContext<AuthContextData>({
@@ -21,6 +22,8 @@ export const AuthContext = React.createContext<AuthContextData>({
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const loginMutation = useLoginMutation()
+  const redictLogin = useNavigate()
 
   React.useEffect(() => {
     const token = localStorage.getItem(config.TOKEN_STORAGE);
@@ -29,12 +32,14 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     }
   }, []);
 
-  const login = async (username: string, password: string) => {
+  const login = async (username: string, password: string): Promise<void> => {
     try {
-      const { token } = await loginUser({ username, password });
-      if (token) {
+      const data = await loginMutation.mutateAsync({ username, password });
+      redictLogin(config.ROUTE.ADMIN.TABLE_TEACHER)
+
+      if (data.token) {
         setIsAuthenticated(true);
-        localStorage.setItem(config.TOKEN_STORAGE, token);
+        localStorage.setItem(config.TOKEN_STORAGE, data.token);
         console.log('Login successful! Token stored in localStorage.');
       }
     } catch (error) {
