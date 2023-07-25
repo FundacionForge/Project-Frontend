@@ -1,25 +1,31 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AuthProvider } from "./app/context/AuthContext";
-import { ProjectProvider } from "./app/context/ProjectProvider";
-import Login from "./app/pages/Login";
-import { TableTeacher } from "./app/pages/TableTeacher";
-import { TableStudent } from "./app/pages/TableStudent";
-import { config } from "./config";
+import React from "react";
+import { Provider } from "react-redux";
+import { BrowserRouter, Navigate, Route } from "react-router-dom";
+import AuthGuard from "./guards/authGuard";
+import { PrivateRoutes, PublicRoutes } from "./models/routes";
+import { store } from "./redux/store";
+import { RoutesWithNotFound } from "./utils/routes-with-not-found";
+
+const Login = React.lazy(() => import('./pages/Login/Login'));
+const Private = React.lazy(() => import('./pages/Private/Private'));
 
 function App() {
   return (
-    <BrowserRouter>
-      <ProjectProvider>
-        <AuthProvider>
-          <Routes>
-            <Route index element={<Login />} />
-            <Route path={config.ROUTE.ADMIN.TABLE_TEACHER} element={<TableTeacher />} />
-            <Route path="/student" element={<TableStudent />} />
-            {/* <Route path="/home-admin" element={<TableCouse />} /> */}
-          </Routes>
-        </AuthProvider>
-      </ProjectProvider>
-    </BrowserRouter>
+    <div>
+      <React.Suspense fallback={<>...Cargando</>}>
+        <Provider store={store}>
+          <BrowserRouter>
+            <RoutesWithNotFound>
+              <Route path="/" element={<Navigate to={PrivateRoutes.PRIVATE} />} />
+              <Route path={PublicRoutes.LOGIN} element={<Login />} />
+              <Route element={<AuthGuard privateValidation={true} />}>
+                <Route path={`${PrivateRoutes.PRIVATE}/*`} element={<Private />} />
+              </Route>
+            </RoutesWithNotFound>
+          </BrowserRouter>
+        </Provider>
+      </React.Suspense>
+    </div>
   );
 }
 

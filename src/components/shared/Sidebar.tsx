@@ -1,12 +1,12 @@
 import { config } from "@/config";
-import { useAuth } from "@/hooks/useAuth";
+import { PublicRoutes } from "@/models";
+import { resetUser } from "@/redux/state/userSlice";
+import { AppDispatch } from "@/redux/store";
+import { clearLocalStorage } from "@/utils/localStorage.util";
 import React from "react";
 import { RiBriefcaseLine, RiCloseLine, RiDashboardLine, RiLogoutBoxRLine, RiMenu3Fill } from "react-icons/ri";
-import { Link, useNavigate } from "react-router-dom";
-
-interface Props {
-  children: JSX.Element | JSX.Element[]
-}
+import { useDispatch } from "react-redux";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 const optionsSidebar = [
   {
@@ -19,7 +19,7 @@ const optionsSidebar = [
   }
 ];
 
-export const Sidebar: React.FC<Props> = ({ children }) => {
+export const Sidebar: React.FC = () => {
   const [sidebar, setSidebar] = React.useState(false);
 
   const handleSidebar = () => {
@@ -59,19 +59,19 @@ export const Sidebar: React.FC<Props> = ({ children }) => {
         {sidebar ? <RiCloseLine /> : <RiMenu3Fill />}
       </button>
       <div className="px-16 pt-10 lg:col-span-5">
-        { children }
+        <Outlet />
       </div>
     </div>
   );
 }
 
 function Reminder() {
-  const {logout} = useAuth()
   const navigate = useNavigate()
-
+  const distpath = useDispatch<AppDispatch>()
   const handleLogout = () => {
-    logout()
-    navigate(config.ROUTE.LOGIN)
+    clearLocalStorage(config.TOKEN_STORAGE)
+    distpath(resetUser())
+    navigate(PublicRoutes.LOGIN, {replace: true})
   };
 
   return (

@@ -61,7 +61,7 @@ const data = [
 
 export const TableTeacher: React.FC = () => {
   return (
-    <Sidebar>
+    <div>
         <div className='mb-20 flex justify-between'>
           <h1 className='text-4xl font-bold uppercase'>Lista de profesores</h1>
           <FormElements />
@@ -138,7 +138,7 @@ export const TableTeacher: React.FC = () => {
             ))}
           </Table.Body>
         </Table>
-    </Sidebar>
+    </div>
   );
 }
 
