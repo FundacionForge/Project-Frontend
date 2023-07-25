@@ -1,4 +1,5 @@
-import React from 'react'
+import { NotFound404 } from '@/pages/NotFound404';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 interface Props {
@@ -9,7 +10,7 @@ export const RoutesWithNotFound: React.FC<Props> = ({ children }) => {
   return (
     <Routes>
       {children}
-      <Route path='*' element={<>NOT FOUND</>} />
+      <Route path='*' element={<NotFound404 />} />
     </Routes>
   );
 }

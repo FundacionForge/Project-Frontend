@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-export const TableStudent: FC = () => {
+export const Student: FC = () => {
   return (
     <>
       TableStudent

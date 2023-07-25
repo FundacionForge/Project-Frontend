@@ -1,6 +1,15 @@
 import { Button, Label, Modal, Table, TextInput } from 'flowbite-react';
 import React from 'react';
-import { Sidebar } from '../components/shared/Sidebar';
+import { RiDeleteBin2Line } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
+
+const header = [
+  { name: 'Nombre y Apellido' },
+  { name: 'Edad' },
+  { name: 'Email' },
+  { name: 'Celular' },
+  { name: 'Dirección' },
+]
 
 const data = [
   {
@@ -59,7 +68,7 @@ const data = [
   }
 ]
 
-export const TableTeacher: React.FC = () => {
+export const Teacher: React.FC = () => {
   return (
     <div>
         <div className='mb-20 flex justify-between'>
@@ -69,70 +78,26 @@ export const TableTeacher: React.FC = () => {
 
         <Table hoverable>
           <Table.Head className='text-center'>
+            {header.map((hea) => (
+              <Table.HeadCell key={hea.name}>{hea.name}</Table.HeadCell>
+            ))}
             <Table.HeadCell>
-              Nombre y Apellido
-            </Table.HeadCell>
-            <Table.HeadCell>
-              Edad
-            </Table.HeadCell>
-            <Table.HeadCell>
-              Email
-            </Table.HeadCell>
-            <Table.HeadCell>
-              Celular
-            </Table.HeadCell>
-            <Table.HeadCell>
-              Dirección
-            </Table.HeadCell>
-            <Table.HeadCell>
-              <span className="sr-only">
-                Opciones
-              </span>
+              <span className="sr-only">Opciones</span>
             </Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y text-center">
             {data.map((row) => (
               <Table.Row key={row.id}>
-                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                  {row.name} {row.lastname}
-                </Table.Cell>
-                <Table.Cell>
-                  {row.age}
-                </Table.Cell>
-                <Table.Cell>
-                  {row.email}
-                </Table.Cell>
-                <Table.Cell>
-                  {row.cellphone}
-                </Table.Cell>
-                <Table.Cell>
-                  {row.address}
-                </Table.Cell>
+                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{row.name} {row.lastname}</Table.Cell>
+                <Table.Cell>{row.age}</Table.Cell>
+                <Table.Cell>{row.email}</Table.Cell>
+                <Table.Cell>{row.cellphone}</Table.Cell>
+                <Table.Cell>{row.address}</Table.Cell>
                 <Table.Cell className='flex gap-5 text-center'>
-                  <a
-                    className="font-medium text-green-600 hover:underline dark:text-cyan-500"
-                    href="/tables"
-                  >
-                    <p>
-                      Ver
-                    </p>
-                  </a>
-                  <a
-                    className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                    href="/tables"
-                  >
-                    <p>
-                      Modificar
-                    </p>
-                  </a>
-                  <a
-                    className="font-medium text-red-600 hover:underline dark:text-cyan-500"
-                    href="/tables"
-                  >
-                    <p>
-                      Eliminar
-                    </p>
-                  </a>
+                  <Link
+                    className="font-medium text-red-600 hover:text-red-400 text-[1.25rem]"
+                    to="#"
+                  ><RiDeleteBin2Line /></Link>
                 </Table.Cell>
               </Table.Row>
             ))}
@@ -148,7 +113,7 @@ function FormElements() {
 
   return (
     <>
-      <Button onClick={() => props.setOpenModal('form-elements')}>Añade Nuevo Profesor</Button>
+      <Button className="bg-primary enabled:hover:bg-primary enabled:hover:bg-opacity-90" onClick={() => props.setOpenModal('form-elements')}>Añade Nuevo Profesor</Button>
       <Modal show={props.openModal === 'form-elements'} size="xl" popup onClose={() => props.setOpenModal(undefined)}>
         <Modal.Header />
         <Modal.Body>
@@ -208,7 +173,7 @@ function FormElements() {
               </div>
 
               <div className="w-full mt-5">
-                <Button type="submit" className="w-full">Crear</Button>
+                <Button className="bg-primary enabled:hover:bg-primary enabled:hover:bg-opacity-90 w-full" type="submit">Crear</Button>
               </div>
             </form>
           </div>

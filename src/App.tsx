@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Navigate, Route } from "react-router-dom";
 import AuthGuard from "./guards/authGuard";
 import { PrivateRoutes, PublicRoutes } from "./models/routes";
+import { LoadingPage } from "./pages/LoadingPage";
 import { store } from "./redux/store";
 import { RoutesWithNotFound } from "./utils/routes-with-not-found";
 
@@ -12,7 +13,7 @@ const Private = React.lazy(() => import('./pages/Private/Private'));
 function App() {
   return (
     <div>
-      <React.Suspense fallback={<>...Cargando</>}>
+      <React.Suspense fallback={<LoadingPage />}>
         <Provider store={store}>
           <BrowserRouter>
             <RoutesWithNotFound>
