@@ -6,15 +6,16 @@ import { PrivateRoutes, PublicRoutes } from "./models/routes";
 import { LoadingPage } from "./pages/LoadingPage";
 import { store } from "./redux/store";
 import { RoutesWithNotFound } from "./utils/routes-with-not-found";
+import { Flowbite } from "flowbite-react";
 
 const Login = React.lazy(() => import('./pages/Login/Login'));
 const Private = React.lazy(() => import('./pages/Private/Private'));
 
 function App() {
   return (
-    <div>
-      <React.Suspense fallback={<LoadingPage />}>
-        <Provider store={store}>
+    <React.Suspense fallback={<LoadingPage />}>
+      <Provider store={store}>
+        <Flowbite>
           <BrowserRouter>
             <RoutesWithNotFound>
               <Route path="/" element={<Navigate to={PrivateRoutes.PRIVATE} />} />
@@ -24,9 +25,9 @@ function App() {
               </Route>
             </RoutesWithNotFound>
           </BrowserRouter>
-        </Provider>
-      </React.Suspense>
-    </div>
+        </Flowbite>
+      </Provider>
+    </React.Suspense>
   );
 }
 

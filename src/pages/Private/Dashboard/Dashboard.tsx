@@ -21,10 +21,11 @@ export default Dashboard;
 function TemplateCardForge() {
   return (
     <>
-      <div className="p-4 bg-white rounded-xl flex flex-col justify-between gap-4 drop-shadow-2xl">
+      <div className="p-4 bg-white rounded-xl flex flex-col justify-between gap-4 drop-shadow-2xl dark:bg-slate-800">
         <img src="/img/logo.png" alt="img-logo" />
       </div>
-      <div className="p-4 bg-white rounded-xl flex flex-col justify-between gap-4 drop-shadow-2xl">
+
+      <div className="p-4 bg-white rounded-xl flex flex-col justify-between gap-4 drop-shadow-2xl dark:bg-slate-800">
         <div className="flex items-center gap-4 bg-primary-100/10 rounded-xl">
           <span className="bg-primary-100 text-gray-300 text-2xl font-bold p-4 rounded-xl">
             1
@@ -69,7 +70,7 @@ function TemplateCardForge() {
 function TemplateCardCourse() {
   return (
     <div className="col-span-1 md:col-span-2 flex flex-col">
-      <h1 className="text-2xl font-bold mb-8">Materias</h1>
+      <h1 className="text-2xl font-bold mb-8 dark:bg-black">Materias</h1>
       <div className="bg-white p-8 rounded-xl shadow-2xl">
         <div className="flex items-center gap-4 mb-8">
           {/* <img
