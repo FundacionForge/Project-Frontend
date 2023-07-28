@@ -1,4 +1,4 @@
-import { NotFound404 } from '@/pages/NotFound404';
+import { NotFound404 } from '@/components/shared/NotFound404';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 

@@ -12,7 +12,8 @@ axiosClient.interceptors.request.use(
     const token = localStorage.getItem(env.TOKEN_STORAGE);
 
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
+      const jsonObject = JSON.parse(token);
+      config.headers['Authorization'] = `Bearer ${jsonObject.token}`;
       config.headers['Content-Type'] = 'application/json'
     }
 
