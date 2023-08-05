@@ -1,6 +1,6 @@
-import { UserInfo } from '@/models';
+import { UserInfo } from '@/models/user.model';
 import { configureStore } from '@reduxjs/toolkit';
-import { userSlice } from './state/userSlice';
+import { userSlice } from './state/user.slice';
 
 export interface AppStore {
   user: UserInfo

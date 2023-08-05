@@ -1,4 +1,4 @@
-import { PrivateRoutes } from '@/models';
+import { PrivateRoutes } from '@/models/routes';
 import { AppStore } from '@/redux/store';
 import React from 'react';
 import { useSelector } from 'react-redux';

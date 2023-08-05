@@ -1,6 +1,7 @@
 import { config } from "@/config";
-import { PrivateRoutes, PublicRoutes } from "@/models";
-import { AppDispatch, AppStore, resetUser } from "@/redux";
+import { PrivateRoutes, PublicRoutes } from "@/models/routes";
+import { resetUser } from "@/redux/state/user.slice";
+import { AppDispatch, AppStore } from "@/redux/store";
 import { clearLocalStorage } from "@/utils/localStorage.util";
 import { DarkThemeToggle, Flowbite } from "flowbite-react";
 import React from "react";

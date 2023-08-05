@@ -1,5 +1,5 @@
 import { config } from '@/config'
-import { UserInfo } from '@/models'
+import { UserInfo } from '@/models/user.model'
 import { clearLocalStorage, persistLocalStorage } from '@/utils/localStorage.util'
 import { createSlice } from '@reduxjs/toolkit'
 

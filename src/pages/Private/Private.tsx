@@ -3,8 +3,9 @@ import { PrivateRoutes } from '@/models/routes';
 import { RoutesWithNotFound } from '@/utils/routes-with-not-found';
 import React from 'react';
 import { Navigate, Route } from 'react-router-dom';
-import { Student, Teacher } from '..';
 import Dashboard from './Dashboard/Dashboard';
+import { Teacher } from '../Teacher/Teacher';
+import { Student } from '../Student/Student';
 
 const Private: React.FC = () => {
   return (

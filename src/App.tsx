@@ -3,7 +3,8 @@ import React from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Navigate, Route } from "react-router-dom";
 import { LoadingPage } from "./components/shared/LoadingPage";
-import AuthGuard from "./guards/authGuard";
+import { customTheme } from "./configs/theme.config";
+import AuthGuard from "./guards/auth.guard";
 import { PrivateRoutes, PublicRoutes } from "./models/routes";
 import { store } from "./redux/store";
 import { RoutesWithNotFound } from "./utils/routes-with-not-found";
@@ -15,7 +16,7 @@ function App() {
   return (
     <React.Suspense fallback={<LoadingPage />}>
       <Provider store={store}>
-        <Flowbite>
+        <Flowbite theme={{theme: customTheme}}>
           <BrowserRouter>
             <RoutesWithNotFound>
               <Route path="/" element={<Navigate to={PrivateRoutes.PRIVATE} />} />

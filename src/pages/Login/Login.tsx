@@ -7,10 +7,10 @@ import * as Yup from 'yup';
 
 import { config } from '@/config';
 import { PrivateRoutes, PublicRoutes } from '@/models/routes';
-import { createUser, resetUser } from '@/redux/state/userSlice';
+import { createUser, resetUser } from '@/redux/state/user.slice';
 import { AppDispatch } from '@/redux/store';
-import { loginUser } from '@/services';
 import { clearLocalStorage } from '@/utils/localStorage.util';
+import { loginUser } from '@/services/auth.service';
 
 interface LoginFormValues {
   username: string;

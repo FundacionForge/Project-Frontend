@@ -1,4 +1,4 @@
-import { PrivateRoutes } from '@/models';
+import { PrivateRoutes } from '@/models/routes';
 import { FC } from 'react'
 import { Link } from 'react-router-dom';
 
