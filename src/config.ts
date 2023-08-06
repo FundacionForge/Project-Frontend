@@ -1,5 +1,5 @@
 export const config = {
-  API_BACKEND: import.meta.env.VITE_BACKEND_URL,
+  API_BACKEND: import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080',
   TOKEN_STORAGE: 'tokenForge',
   QUERY_KEY: {
     STUDENT: 'students',

@@ -13,7 +13,6 @@ const PublicValidation = <Navigate replace to={PublicRoutes.LOGIN} />
 
 const AuthGuard: React.FC<Props> = ({privateValidation}) => {
   const userState = useSelector((store: AppStore) => store.user)
-  console.log(userState);
 
   return userState.username ?
     privateValidation ?
