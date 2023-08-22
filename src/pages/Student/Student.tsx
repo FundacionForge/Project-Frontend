@@ -1,4 +1,6 @@
+import { CheckBoxCustom } from '@/components/CheckBoxCustom';
 import { InputCustom } from '@/components/InputCustom';
+import { SelectCustom } from '@/components/SelectCustom';
 import { config } from '@/config';
 import { getAllCourse } from '@/services/course.service';
 import { getAllDegree } from '@/services/degree.service';
@@ -83,9 +85,9 @@ const validationSchema = Yup.object().shape({
   motherLastName: Yup.string().required('El apellido materno es requerido'),
   address: Yup.string().required('La dirección es requerida'),
   phoneNumber: Yup.string().required('El celular es requerido'),
-  courses: Yup.string().required('El celular es requerido'),
-  degrees: Yup.string().required('El celular es requerido'),
-  shifts: Yup.string().required('El celular es requerido'),
+  courses: Yup.string().required('Los cursos son requeridos'),
+  degrees: Yup.string().required('El grado es requerido'),
+  shifts: Yup.string().required('El turno es requerido'),
 });
 
 const initialValues = {
@@ -143,10 +145,11 @@ function FormElements() {
               validationSchema={validationSchema}
               onSubmit={(values) => {
                 addStudentMutation.mutate(values);
-                // console.log(values);
+                console.log(values);
+                console.log('hola');
               }}
             >
-              {() => (
+              {({errors, values}) => (
                 <Form>
                   <div>
                     <InputCustom textLabel='Correo Electrónico' name='email' type='text' />
@@ -185,56 +188,54 @@ function FormElements() {
                     </div>
                     <div className='grid grid-cols-2'>
                       {courses?.data.map((course) => (
-                        <div key={course.id} className='flex gap-2'>
-                          <div className='flex h-5 items-center'>
-                            <Field component={Checkbox} id={course.name} name='courses' />
-                          </div>
-                          <div className='flex flex-col'>
-                            <Label htmlFor={course.name}>{course.name}</Label>
-                          </div>
-                        </div>
+                        <CheckBoxCustom textLabel={course.name} name={course.name} />
+
+                        // <div key={course.id} className='flex gap-2'>
+                        //   <div className='flex h-5 items-center'>
+                        //     <Field component={Checkbox} id={course.name} name='courses' />
+                        //   </div>
+                        //   <div className='flex flex-col'>
+                        //     <Label htmlFor={course.name}>{course.name}</Label>
+                        //   </div>
+                        // </div>
                       ))}
+
                     </div>
                   </div>
 
                   <div className='grid grid-cols-2 gap-4'>
                     <div>
-                      <div className='mb-2 block'>
-                        <Label htmlFor='shifts' value='Seleccione el turno' />
-                      </div>
-                      <Field component={Select} id='shifts' name='shifts' required>
-                        <option value='0' disabled>
-                          Seleccione
-                        </option>
+                      <SelectCustom textLabel='Seleccione el turno' name='shifts'>
                         {shifts?.data.map((shift) => (
                           <option value={shift.id} key={shift.id}>
                             {shift.name}
                           </option>
                         ))}
-                      </Field>
+                      </SelectCustom>
                     </div>
 
                     <div>
-                      <div className='mb-2 block'>
-                        <Label htmlFor='degrees' value='Nivel de grado' />
-                      </div>
-                      <Field component={Select} id='degrees' name='degrees' required>
-                        <option value='0' disabled>
-                          Seleccione
-                        </option>
+                      <SelectCustom textLabel='Nivel de grado' name='degrees'>
                         {degrees?.data.map((degree) => (
                           <option value={degree.id} key={degree.id}>
                             {degree.name} {degree.academicLevel}
                           </option>
                         ))}
-                      </Field>
+                      </SelectCustom>
                     </div>
                   </div>
 
                   <div className='w-full mt-5'>
-                    <Button className='bg-primary enabled:hover:bg-primary enabled:hover:bg-opacity-90 w-full' type='submit'>
+                    <button
+                      className='bg-primary enabled:hover:bg-primary enabled:hover:bg-opacity-90 w-full'
+                      onClick={(e) => {
+                        e.preventDefault();
+                        console.log({ errors, values });
+                      }}
+                      // type='submit'
+                    >
                       Crear
-                    </Button>
+                    </button>
                   </div>
                 </Form>
               )}
