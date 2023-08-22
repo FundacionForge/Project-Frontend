@@ -147,10 +147,7 @@ function FormElements() {
               {({ errors, touched }) => (
                 <Form>
                   <div>
-                    <div className='mb-2 block'>
-                      <Label htmlFor='email' value='Correo Electrónico' />
-                    </div>
-                    <InputCustom name='email'/>
+                    <InputCustom textLabel='Correo Electrónico' name='email'/>
                     {/* <Field component={TextInput} type='text' id='email' name='email' placeholder='name@company.com' required /> */}
                     {/* {errors.email && touched.email && <div className='text-red-500'>{errors.email}</div>} */}
                   </div>

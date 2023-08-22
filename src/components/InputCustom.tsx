@@ -1,15 +1,19 @@
-import { TextInput } from 'flowbite-react';
+import { Label, TextInput } from 'flowbite-react';
 import { useFormikContext } from 'formik';
 
-interface MyProps {
+interface Props {
   name: string;
+  textLabel: string;
 }
-export const InputCustom = ({ name }: MyProps) => {
+export const InputCustom = (props: Props) => {
   const { values, handleChange, touched, errors } = useFormikContext<any>();
   return (
     <>
-      <TextInput name={name} value={values[name]} id={name} onChange={handleChange} />
-      {errors[name] && touched[name] && <div className='text-red-500'>{errors[name] as any}</div>}
+      <div className='mb-2 block'>
+        <Label htmlFor={props.name} value={props.textLabel} />
+      </div>
+      <TextInput name={props.name} value={values[props.name]} id={props.name} onChange={handleChange} />
+      {errors[props.name] && touched[props.name] && <div className='text-red-500'>{errors[props.name] as any}</div>}
     </>
   );
 };
