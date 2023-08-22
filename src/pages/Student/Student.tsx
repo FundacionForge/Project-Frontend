@@ -45,11 +45,13 @@ export const Student: React.FC = () => {
           </Table.HeadCell>
         </Table.Head>
         <Table.Body className='divide-y text-center'>
-          {students && students.length > 0 ? (
-            students.map((student) => (
+          {students?.data && students?.data.length > 0 ? (
+            students?.data.map((student) => (
               <Table.Row key={student.id}>
                 <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>{student.dni}</Table.Cell>
-                <Table.Cell>{student.name} {student.lastName} {student.motherLastName}</Table.Cell>
+                <Table.Cell>
+                  {student.name} {student.lastName} {student.motherLastName}
+                </Table.Cell>
                 <Table.Cell>{student.email}</Table.Cell>
                 <Table.Cell>{student.phoneNumber}</Table.Cell>
                 <Table.Cell>{student.address}</Table.Cell>
@@ -144,62 +146,36 @@ function FormElements() {
                 // console.log(values);
               }}
             >
-              {({ errors, touched }) => (
+              {() => (
                 <Form>
                   <div>
-                    <InputCustom textLabel='Correo Electrónico' name='email'/>
-                    {/* <Field component={TextInput} type='text' id='email' name='email' placeholder='name@company.com' required /> */}
-                    {/* {errors.email && touched.email && <div className='text-red-500'>{errors.email}</div>} */}
+                    <InputCustom textLabel='Correo Electrónico' name='email' type='text' />
                   </div>
 
                   <div className='grid grid-cols-2 gap-4'>
                     <div>
-                      <div className='mb-2 block'>
-                        <Label htmlFor='name' value='Nombre' />
-                      </div>
-                      <Field component={TextInput} type='text' id='name' name='name' required />
-                      {errors.name && touched.name && <div className='text-red-500'>{errors.name}</div>}
+                      <InputCustom textLabel='Nombre' name='name' type='text' />
                     </div>
                     <div>
-                      <div className='mb-2 block'>
-                        <Label htmlFor='dni' value='DNI' />
-                      </div>
-                      <Field component={TextInput} type='number' id='dni' name='dni' required />
-                      {errors.dni && touched.dni && <div className='text-red-500'>{errors.dni}</div>}
+                      <InputCustom textLabel='DNI' name='dni' type='number' />
                     </div>
                   </div>
 
                   <div className='grid grid-cols-2 gap-4'>
                     <div>
-                      <div className='mb-2 block'>
-                        <Label htmlFor='lastName' value='Apellido paterno' />
-                      </div>
-                      <Field component={TextInput} type='text' id='lastName' name='lastName' required />
-                      {errors.lastName && touched.lastName && <div className='text-red-500'>{errors.lastName}</div>}
+                      <InputCustom textLabel='Apellido paterno' name='lastName' type='text' />
                     </div>
                     <div>
-                      <div className='mb-2 block'>
-                        <Label htmlFor='motherLastName' value='Apellido materno' />
-                      </div>
-                      <Field component={TextInput} type='text' id='motherLastName' name='motherLastName' required />
-                      {errors.motherLastName && touched.motherLastName && <div className='text-red-500'>{errors.motherLastName}</div>}
+                      <InputCustom textLabel='Apellido materno' name='motherLastName' type='text' />
                     </div>
                   </div>
 
                   <div className='grid grid-cols-2 gap-4'>
                     <div>
-                      <div className='mb-2 block'>
-                        <Label htmlFor='address' value='Dirección' />
-                      </div>
-                      <Field component={TextInput} type='text' id='address' name='address' required />
-                      {errors.address && touched.address && <div className='text-red-500'>{errors.address}</div>}
+                      <InputCustom textLabel='Dirección' name='address' type='text' />
                     </div>
                     <div>
-                      <div className='mb-2 block'>
-                        <Label htmlFor='phoneNumber' value='Celular' />
-                      </div>
-                      <Field component={TextInput} type='number' id='phoneNumber' name='phoneNumber' required />
-                      {errors.phoneNumber && touched.phoneNumber && <div className='text-red-500'>{errors.phoneNumber}</div>}
+                      <InputCustom textLabel='Celular' name='phoneNumber' type='number' />
                     </div>
                   </div>
 
@@ -246,7 +222,7 @@ function FormElements() {
                         <option value='0' disabled>
                           Seleccione
                         </option>
-                        {degrees?.map((degree) => (
+                        {degrees?.data.map((degree) => (
                           <option value={degree.id} key={degree.id}>
                             {degree.name} {degree.academicLevel}
                           </option>

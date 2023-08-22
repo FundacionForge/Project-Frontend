@@ -1,6 +1,12 @@
 export interface Course {
-  id:             string;
-  name:           string;
-  description:    string;
-  image:          string;
+  data:               DataCourse[]
+  msg:                string;
+  success:            string;
+}
+
+interface DataCourse {
+  id:                 string;
+  name:               string;
+  description:        string;
+  image:              string;
 }

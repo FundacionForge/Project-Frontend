@@ -1,6 +1,12 @@
 export interface Degree {
-  id:               string;
-  name:             string;
-  assignedRoom:     string;
-  academicLevel:    string;
+  msg:                string;
+  success:            string;
+  data:               DataDegree[];
+}
+
+interface DataDegree {
+  id:                 string;
+  name:               string;
+  assignedRoom:       string;
+  academicLevel:      string;
 }

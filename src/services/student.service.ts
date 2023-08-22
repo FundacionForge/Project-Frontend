@@ -8,7 +8,7 @@ export const createStudent = async (student: StudentDto) => {
 }
 
 export const getAllStudent = async () => {
-  const { data } = await axiosClient.get<Student[]>(`/api/student`)
+  const { data } = await axiosClient.get<Student>(`/api/student`)
   return data;
 }
 
