@@ -96,8 +96,8 @@ const validationSchema = Yup.object().shape({
     .test('isNumeric', 'El número de teléfono debe contener solo dígitos', (value) => /^\d+$/.test(value)),
   address: Yup.string().required('La dirección no puede estar en blanco'),
   courses: Yup.array().required('La lista de cursos no puede estar vacía'),
-  degrees: Yup.number().required('El grado no puede estar vacío'),
-  shifts: Yup.number().required('El turno no puede estar vacío'),
+  degrees: Yup.mixed().required('El grado no puede estar vacío'),
+  shifts: Yup.mixed().required('El turno no puede estar vacío'),
 });
 
 const initialValues = {
@@ -126,6 +126,7 @@ function FormElements() {
       queryClient.invalidateQueries([config.QUERY_KEY.STUDENT]);
     },
     onError: (err: any) => {
+      props.setOpenModal(undefined);
       const { success, errors } = err.response.data as { msg: string; success: boolean; errors: string[] };
       if (!success) {
         const errorMsg = errors.map((err) => `${err.split(':')[1]} \n`);
@@ -209,7 +210,6 @@ function FormElements() {
                       {courses?.data.map((course) => (
                         <CheckBoxCustom key={course.id} textLabel={course.name} name='courses' value={course.id} />
                       ))}
-                      <ErrorMessage name='courses' component='div' />
                     </div>
                   </div>
 

@@ -9,12 +9,12 @@ interface Props {
 }
 
 export const CheckBoxCustom = (props: Props) => {
-  const { values, setFieldValue } = useFormikContext<any>();
-  const [isChecked, setIsChecked] = React.useState(values.courses.includes(props.value));
+  const { values, setFieldValue, handleBlur, touched, errors } = useFormikContext<any>();
+
+  const isChecked = values.courses.includes(props.value);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.checked;
-    setIsChecked(newValue);
 
     if (newValue) {
       setFieldValue(props.name, [...values.courses, props.value]);
@@ -31,9 +31,13 @@ export const CheckBoxCustom = (props: Props) => {
           value={props.value}
           checked={isChecked}
           onChange={handleCheckboxChange}
+          onBlur={handleBlur}
         />
         {props.textLabel}
       </label>
+      {(errors[props.name] && touched[props.name]) || (touched[props.name] && values[props.name].length > 0) ? (
+        <div className='text-red-500'>{errors[props.name] as string}</div>
+      ) : null}
     </div>
   );
 };
