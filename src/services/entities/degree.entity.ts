@@ -1,10 +1,10 @@
-export interface Degree {
+export interface ResponseDegree {
   msg:                string;
   success:            string;
-  data:               DataDegree[];
+  data:               Degree[];
 }
 
-interface DataDegree {
+export interface Degree {
   id:                 string;
   name:               string;
   assignedRoom:       string;

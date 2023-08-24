@@ -8,7 +8,7 @@ interface Props {
 }
 export const InputCustom = (props: Props) => {
   const { values, handleChange, touched, errors } = useFormikContext<any>();
-
+   
   return (
     <>
       <div className='mb-2 block'>

@@ -1,10 +1,10 @@
-export interface Teacher {
+export interface ResponseTeacher {
   msg:                string;
   success:            string;
-  data:               DataTeacher[];
+  data:               Teacher[];
 }
 
-interface DataTeacher {
+export interface Teacher {
     id:               string;
     dni:              string;
     name:             string;
