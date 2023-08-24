@@ -149,7 +149,7 @@ function FormElements() {
                 console.log('hola');
               }}
             >
-              {({ errors, values }) => (
+              {() => (
                 <Form>
                   <div>
                     <InputCustom textLabel='Correo Electrónico' name='email' type='text' />
@@ -217,7 +217,7 @@ function FormElements() {
                   </div>
 
                   <div className='w-full mt-5'>
-                    <button
+                    {/* <button
                       className='bg-primary enabled:hover:bg-primary enabled:hover:bg-opacity-90 w-full'
                       onClick={(e) => {
                         e.preventDefault();
@@ -226,7 +226,12 @@ function FormElements() {
                       // type='submit'
                     >
                       Crear
-                    </button>
+                    </button> */}
+                    <div className='w-full mt-5'>
+                      <Button className='bg-primary enabled:hover:bg-primary enabled:hover:bg-opacity-90 w-full' type='submit'>
+                        Crear
+                      </Button>
+                    </div>
                   </div>
                 </Form>
               )}

@@ -7,6 +7,7 @@ export const config = {
     SHIFT: 'shifts',
     COURSE: 'courses',
     DEGREE: 'degrees',
+    QUALIFICATION: 'qualifications'
   },
   ROLE: {
     ADMIN: 'ROLE_ADMIN',
