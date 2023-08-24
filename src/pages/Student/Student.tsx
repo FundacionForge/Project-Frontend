@@ -13,6 +13,7 @@ import { ErrorMessage, Form, Formik } from 'formik';
 import React from 'react';
 import { RiDeleteBin2Line } from 'react-icons/ri';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 
 const header = [{ name: 'Dni' }, { name: 'Nombre y apellidos' }, { name: 'Email' }, { name: 'Celular' }, { name: 'Dirección' }];
 
@@ -96,21 +97,10 @@ const validationSchema = Yup.object().shape({
     .test('isNumeric', 'El número de teléfono debe contener solo dígitos', (value) => /^\d+$/.test(value)),
   address: Yup.string().required('La dirección no puede estar en blanco'),
   courses: Yup.array()
-    .of(
-      Yup.object().shape({
-        id: Yup.number().required('Debe seleccionar al menos un curso'),
-      })
-    )
     .required('La lista de cursos no puede estar vacía'),
-  degrees: Yup.object()
-    .shape({
-      id: Yup.number().required('Debe seleccionar un grado'),
-    })
+  degrees: Yup.number()
     .required('El grado no puede estar vacío'),
-  shifts: Yup.object()
-    .shape({
-      id: Yup.number().required('Debe seleccionar un turno'),
-    })
+  shifts: Yup.number()
     .required('El turno no puede estar vacío'),
 });
 
@@ -137,6 +127,16 @@ function FormElements() {
     onSuccess: () => {
       queryClient.invalidateQueries([config.QUERY_KEY.STUDENT]);
     },
+    onError: (err: any) => {
+      const { success, errors } = err.response.data as { msg: string, success: boolean, errors: string[] }
+      if (!success) {
+        const errorMsg = errors.map(err => `${err.split(':')[1]} \n`);
+        errorMsg.forEach((msg) => {
+          toast.error(msg)
+        }
+        )
+      }
+    }
   });
 
   const { data: shifts } = useQuery({
@@ -169,9 +169,12 @@ function FormElements() {
               validationSchema={validationSchema}
               onSubmit={(values) => {
                 addStudentMutation.mutate(values);
+              }
+
+
                 // console.log(values);
                 // console.log('hola');
-              }}
+              }
             >
               {() => (
                 <Form>

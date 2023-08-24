@@ -1,7 +1,7 @@
 import { ObjectId } from "@/services/types";
 
-export const generateObjectId = (ids: number[] | number): ObjectId[] | ObjectId => {
-  if (typeof ids === "number") return { id: ids }
-  if (typeof ids === "string") return { id: parseInt(ids) }
-  return ids.map(numero => ({ id: numero }));
+export const generateObjectId = (data: number[] | number): ObjectId[] | ObjectId => {
+  if (typeof data === "number") return { id: data }
+  if (typeof data === "string") return { id: parseInt(data) }
+  return data.map(numero => ({ id: numero }));
 }
