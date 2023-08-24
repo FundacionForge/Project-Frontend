@@ -1,10 +1,10 @@
-export interface Qualification {
+export interface ResponseQualification {
   msg:                string;
   success:            string;
-  data:               DataQualification[];
+  data:               Qualification[];
 }
 
-interface DataQualification {
+export interface Qualification {
   id:                 string;
   name:               string;
 }

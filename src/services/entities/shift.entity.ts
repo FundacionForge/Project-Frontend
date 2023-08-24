@@ -1,10 +1,10 @@
-export interface Shift {
+export interface ResponseShift {
   msg:                string;
   success:            string;
-  data:               DataShift[];
+  data:               Shift[];
 }
 
-interface DataShift {
+export interface Shift {
   id:               string;
   name:             string;
 }

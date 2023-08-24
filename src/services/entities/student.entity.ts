@@ -1,16 +1,23 @@
-export interface Student {
-  msg:                string;
-  success:            string;
-  data:               DataStudent[];
+import { Course } from "./courses.entity";
+import { Degree } from "./degree.entity";
+import { Shift } from "./shift.entity";
+
+export interface ResponseStudent {
+  msg: string;
+  success: string;
+  data: Student[];
 }
 
-interface DataStudent {
-    id:               string;
-    dni:              string;
-    name:             string;
-    lastName:         string;
-    motherLastName:   string;
-    email:            string;
-    phoneNumber:      string;
-    address:          string;
+export interface Student {
+  id: string;
+  dni: string;
+  name: string;
+  lastName: string;
+  motherLastName: string;
+  email: string;
+  phoneNumber: string;
+  address: string;
+  degrees: Degree;
+  shifts: Shift;
+  courses: Course[];
 }

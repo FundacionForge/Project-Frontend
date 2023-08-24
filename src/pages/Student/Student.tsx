@@ -169,8 +169,8 @@ function FormElements() {
               validationSchema={validationSchema}
               onSubmit={(values) => {
                 addStudentMutation.mutate(values);
-                console.log(values);
-                console.log('hola');
+                // console.log(values);
+                // console.log('hola');
               }}
             >
               {() => (

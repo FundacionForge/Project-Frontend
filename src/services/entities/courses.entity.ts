@@ -1,10 +1,10 @@
-export interface Course {
-  data:               DataCourse[]
+export interface ResponseCourse {
+  data:               Course[]
   msg:                string;
   success:            string;
 }
 
-interface DataCourse {
+export interface Course {
   id:                 string;
   name:               string;
   description:        string;
