@@ -2,7 +2,6 @@ import { CheckBoxCustom } from '@/components/CheckBoxCustom';
 import { InputCustom } from '@/components/InputCustom';
 import { SelectCustom } from '@/components/SelectCustom';
 import { config } from '@/config';
-import { axiosClient } from '@/configs/axios.config';
 import { getAllCourse } from '@/services/course.service';
 import { getAllDegree } from '@/services/degree.service';
 import { getAllShift } from '@/services/shift.service';
@@ -12,8 +11,8 @@ import { Button, Label, Modal, Table } from 'flowbite-react';
 import { ErrorMessage, Form, Formik } from 'formik';
 import React from 'react';
 import { RiDeleteBin2Line } from 'react-icons/ri';
-import * as Yup from 'yup';
 import { toast } from 'react-toastify';
+import * as Yup from 'yup';
 
 const header = [{ name: 'Dni' }, { name: 'Nombre y apellidos' }, { name: 'Email' }, { name: 'Celular' }, { name: 'Dirección' }];
 
@@ -96,12 +95,9 @@ const validationSchema = Yup.object().shape({
     .length(9, 'El número de teléfono debe tener 9 dígitos')
     .test('isNumeric', 'El número de teléfono debe contener solo dígitos', (value) => /^\d+$/.test(value)),
   address: Yup.string().required('La dirección no puede estar en blanco'),
-  courses: Yup.array()
-    .required('La lista de cursos no puede estar vacía'),
-  degrees: Yup.number()
-    .required('El grado no puede estar vacío'),
-  shifts: Yup.number()
-    .required('El turno no puede estar vacío'),
+  courses: Yup.array().required('La lista de cursos no puede estar vacía'),
+  degrees: Yup.number().required('El grado no puede estar vacío'),
+  shifts: Yup.number().required('El turno no puede estar vacío'),
 });
 
 const initialValues = {
@@ -125,18 +121,19 @@ function FormElements() {
   const addStudentMutation = useMutation({
     mutationFn: createStudent,
     onSuccess: () => {
+      toast.success('Estudiante creado exitosamente');
+      props.setOpenModal(undefined);
       queryClient.invalidateQueries([config.QUERY_KEY.STUDENT]);
     },
     onError: (err: any) => {
-      const { success, errors } = err.response.data as { msg: string, success: boolean, errors: string[] }
+      const { success, errors } = err.response.data as { msg: string; success: boolean; errors: string[] };
       if (!success) {
-        const errorMsg = errors.map(err => `${err.split(':')[1]} \n`);
+        const errorMsg = errors.map((err) => `${err.split(':')[1]} \n`);
         errorMsg.forEach((msg) => {
-          toast.error(msg)
-        }
-        )
+          toast.error(msg);
+        });
       }
-    }
+    },
   });
 
   const { data: shifts } = useQuery({
@@ -169,12 +166,7 @@ function FormElements() {
               validationSchema={validationSchema}
               onSubmit={(values) => {
                 addStudentMutation.mutate(values);
-              }
-
-
-                // console.log(values);
-                // console.log('hola');
-              }
+              }}
             >
               {() => (
                 <Form>
