@@ -2,6 +2,7 @@ import { CheckBoxCustom } from '@/components/CheckBoxCustom';
 import { InputCustom } from '@/components/InputCustom';
 import { SelectCustom } from '@/components/SelectCustom';
 import { config } from '@/config';
+import { axiosClient } from '@/configs/axios.config';
 import { getAllCourse } from '@/services/course.service';
 import { getAllDegree } from '@/services/degree.service';
 import { getAllShift } from '@/services/shift.service';
@@ -78,16 +79,39 @@ export const Student: React.FC = () => {
 };
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email('Correo electrónico inválido').required('El correo electrónico es requerido'),
-  name: Yup.string().required('El nombre es requerido'),
-  dni: Yup.string().required('El DNI es requerido'),
-  lastName: Yup.string().required('El apellido paterno es requerido'),
-  motherLastName: Yup.string().required('El apellido materno es requerido'),
-  address: Yup.string().required('La dirección es requerida'),
-  phoneNumber: Yup.string().required('El celular es requerido'),
-  courses: Yup.array().of(Yup.number().required('Cada curso es requerido')).required('Los cursos son requeridos'),
-  degrees: Yup.string().required('El grado es requerido'),
-  shifts: Yup.string().required('El turno es requerido'),
+  dni: Yup.string().required('El DNI no puede estar en blanco').min(8, 'El DNI debe tener exactamente 8 caracteres').max(8, 'El DNI debe tener exactamente 8 caracteres'),
+  name: Yup.string().required('El nombre no puede estar en blanco').min(3, 'El nombre debe tener al menos 3 caracteres').max(10, 'El nombre debe tener como máximo 10 caracteres'),
+  lastName: Yup.string()
+    .required('El apellido no puede estar en blanco')
+    .min(3, 'El apellido debe tener al menos 3 caracteres')
+    .max(10, 'El apellido debe tener como máximo 10 caracteres'),
+  motherLastName: Yup.string()
+    .required('El apellido materno no puede estar en blanco')
+    .min(3, 'El apellido materno debe tener al menos 3 caracteres')
+    .max(10, 'El apellido materno debe tener como máximo 10 caracteres'),
+  email: Yup.string().required('El email no puede estar en blanco').email('El email debe ser válido'),
+  phoneNumber: Yup.string()
+    .required('El número de teléfono no puede estar en blanco')
+    .length(9, 'El número de teléfono debe tener 9 dígitos')
+    .test('isNumeric', 'El número de teléfono debe contener solo dígitos', (value) => /^\d+$/.test(value)),
+  address: Yup.string().required('La dirección no puede estar en blanco'),
+  courses: Yup.array()
+    .of(
+      Yup.object().shape({
+        id: Yup.number().required('Debe seleccionar al menos un curso'),
+      })
+    )
+    .required('La lista de cursos no puede estar vacía'),
+  degrees: Yup.object()
+    .shape({
+      id: Yup.number().required('Debe seleccionar un grado'),
+    })
+    .required('El grado no puede estar vacío'),
+  shifts: Yup.object()
+    .shape({
+      id: Yup.number().required('Debe seleccionar un turno'),
+    })
+    .required('El turno no puede estar vacío'),
 });
 
 const initialValues = {

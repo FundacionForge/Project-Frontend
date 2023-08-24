@@ -1,4 +1,3 @@
-import { CheckBoxCustom } from '@/components/CheckBoxCustom';
 import { InputCustom } from '@/components/InputCustom';
 import { SelectCustom } from '@/components/SelectCustom';
 import { config } from '@/config';
@@ -15,7 +14,7 @@ import { RiDeleteBin2Line } from 'react-icons/ri';
 import { Form } from 'react-router-dom';
 import * as Yup from 'yup';
 
-const header = [{ name: 'Nombre y Apellido' }, { name: 'Edad' }, { name: 'Email' }, { name: 'Celular' }, { name: 'Dirección' }];
+const header = [{ name: 'Dni' }, { name: 'Nombre y Apellido' }, { name: 'Email' }, { name: 'Celular' }, { name: 'Dirección' }];
 
 const data = [
   {
@@ -293,16 +292,6 @@ function FormElements() {
                   </div>
 
                   <div className='w-full mt-5'>
-                    {/* <button
-                      className='bg-primary enabled:hover:bg-primary enabled:hover:bg-opacity-90 w-full'
-                      onClick={(e) => {
-                        e.preventDefault();
-                        console.log({ errors, values });
-                      }}
-                      // type='submit'
-                    >
-                      Crear
-                    </button> */}
                     <div className='w-full mt-5'>
                       <Button className='bg-primary enabled:hover:bg-primary enabled:hover:bg-opacity-90 w-full' type='submit'>
                         Crear
