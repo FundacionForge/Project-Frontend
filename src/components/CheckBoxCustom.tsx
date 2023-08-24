@@ -11,28 +11,25 @@ interface Props {
 export const CheckBoxCustom = (props: Props) => {
   const { values, setFieldValue, handleBlur, touched, errors } = useFormikContext<any>();
 
-  const isChecked = values.courses.includes(props.value);
+  const isChecked = values[props.name].includes(props.value);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.checked;
 
     if (newValue) {
-      setFieldValue(props.name, [...values.courses, props.value]);
+      setFieldValue(props.name, [...values[props.name], props.value]);
     } else {
-      setFieldValue(props.name, values.courses.filter((id: string) => id !== props.value));
+      setFieldValue(
+        props.name,
+        values[props.name].filter((id: string) => id !== props.value)
+      );
     }
   };
 
   return (
     <div>
       <label>
-        <Checkbox
-          name={props.name}
-          value={props.value}
-          checked={isChecked}
-          onChange={handleCheckboxChange}
-          onBlur={handleBlur}
-        />
+        <Checkbox name={props.name} value={props.value} checked={isChecked} onChange={handleCheckboxChange} onBlur={handleBlur} />
         {props.textLabel}
       </label>
       {(errors[props.name] && touched[props.name]) || (touched[props.name] && values[props.name].length > 0) ? (

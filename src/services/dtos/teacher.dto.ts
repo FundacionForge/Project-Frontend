@@ -7,8 +7,8 @@ export interface TeacherDto {
   phoneNumber:      string;
   address:          string;
 
-  degrees:          number[];
-  courses:          string;
-  shifts:           string;
-  qualifications:   string;
+  degrees:          any;
+  courses:          any;
+  shifts:           any;
+  qualifications:   any;
 }

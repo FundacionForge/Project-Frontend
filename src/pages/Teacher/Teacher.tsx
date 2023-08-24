@@ -1,3 +1,4 @@
+import { CheckBoxCustom } from '@/components/CheckBoxCustom';
 import { InputCustom } from '@/components/InputCustom';
 import { SelectCustom } from '@/components/SelectCustom';
 import { config } from '@/config';
@@ -8,83 +9,26 @@ import { getAllShift } from '@/services/shift.service';
 import { createTeacher, deleteTeacher, getAllTeacher } from '@/services/teacher.service';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Label, Modal, Table } from 'flowbite-react';
-import { ErrorMessage, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import React from 'react';
 import { RiDeleteBin2Line } from 'react-icons/ri';
-import { Form } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
 const header = [{ name: 'Dni' }, { name: 'Nombre y Apellido' }, { name: 'Email' }, { name: 'Celular' }, { name: 'Dirección' }];
-
-const data = [
-  {
-    id: 1,
-    name: 'Marcos',
-    lastname: 'Alanya Pacheco',
-    age: 22,
-    email: 'marcos@gmail.com',
-    cellphone: 934737663,
-    address: 'Av Nueva Generacion',
-  },
-  {
-    id: 2,
-    name: 'Marcos',
-    lastname: 'Alanya Pacheco',
-    age: 22,
-    email: 'marcos@gmail.com',
-    cellphone: 934737663,
-    address: 'Av Nueva Generacion',
-  },
-  {
-    id: 3,
-    name: 'Marcos',
-    lastname: 'Alanya Pacheco',
-    age: 22,
-    email: 'marcos@gmail.com',
-    cellphone: 934737663,
-    address: 'Av Nueva Generacion',
-  },
-  {
-    id: 4,
-    name: 'Marcos',
-    lastname: 'Alanya Pacheco',
-    age: 22,
-    email: 'marcos@gmail.com',
-    cellphone: 934737663,
-    address: 'Av Nueva Generacion',
-  },
-  {
-    id: 5,
-    name: 'Marcos',
-    lastname: 'Alanya Pacheco',
-    age: 22,
-    email: 'marcos@gmail.com',
-    cellphone: 934737663,
-    address: 'Av Nueva Generacion',
-  },
-  {
-    id: 6,
-    name: 'Marcos',
-    lastname: 'Alanya Pacheco',
-    age: 22,
-    email: 'marcos@gmail.com',
-    cellphone: 934737663,
-    address: 'Av Nueva Generacion',
-  },
-];
 
 export const Teacher: React.FC = () => {
   const queryClient = useQueryClient();
 
   const { data: teachers } = useQuery({
-    queryKey: [config.QUERY_KEY.STUDENT],
+    queryKey: [config.QUERY_KEY.TEACHER],
     queryFn: getAllTeacher,
   });
 
   const deleteTeacherMutation = useMutation({
     mutationFn: deleteTeacher,
     onSuccess: () => {
-      queryClient.invalidateQueries([config.QUERY_KEY.STUDENT]);
+      queryClient.invalidateQueries([config.QUERY_KEY.TEACHER]);
     },
   });
 
@@ -136,17 +80,26 @@ export const Teacher: React.FC = () => {
 };
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email('Correo electrónico inválido').required('El correo electrónico es requerido'),
-  name: Yup.string().required('El nombre es requerido'),
-  dni: Yup.string().required('El DNI es requerido'),
-  lastName: Yup.string().required('El apellido paterno es requerido'),
-  motherLastName: Yup.string().required('El apellido materno es requerido'),
-  address: Yup.string().required('La dirección es requerida'),
-  phoneNumber: Yup.string().required('El celular es requerido'),
-  qualifications: Yup.string().required('La profesion es requerido'),
-  courses: Yup.string().required('El curso es requerido'),
-  degrees: Yup.array().of(Yup.number().required('Cada grado es requerido')).required('Los grados son requeridos'),
-  shifts: Yup.string().required('El turno es requerido'),
+  dni: Yup.string().required('El DNI no puede estar en blanco').min(8, 'El DNI debe tener exactamente 8 caracteres').max(8, 'El DNI debe tener exactamente 8 caracteres'),
+  name: Yup.string().required('El nombre no puede estar en blanco').min(3, 'El nombre debe tener al menos 3 caracteres').max(10, 'El nombre debe tener como máximo 10 caracteres'),
+  lastName: Yup.string()
+    .required('El apellido no puede estar en blanco')
+    .min(3, 'El apellido debe tener al menos 3 caracteres')
+    .max(10, 'El apellido debe tener como máximo 10 caracteres'),
+  motherLastName: Yup.string()
+    .required('El apellido materno no puede estar en blanco')
+    .min(3, 'El apellido materno debe tener al menos 3 caracteres')
+    .max(10, 'El apellido materno debe tener como máximo 10 caracteres'),
+  email: Yup.string().required('El email no puede estar en blanco').email('El email debe ser válido'),
+  phoneNumber: Yup.string()
+    .required('El número de teléfono no puede estar en blanco')
+    .length(9, 'El número de teléfono debe tener 9 dígitos')
+    .test('isNumeric', 'El número de teléfono debe contener solo dígitos', (value) => /^\d+$/.test(value)),
+  address: Yup.string().required('La dirección no puede estar en blanco'),
+  degrees: Yup.array().required('El grado no puede estar vacío'),
+  courses: Yup.mixed().required('El curso no puede estar vacío'),
+  shifts: Yup.mixed().required('El turno no puede estar vacío'),
+  qualifications: Yup.mixed().required('La profesion no puede estar vacío'),
 });
 
 const initialValues = {
@@ -171,7 +124,19 @@ function FormElements() {
   const addTeacherMutation = useMutation({
     mutationFn: createTeacher,
     onSuccess: () => {
+      toast.success('Estudiante creado exitosamente');
+      props.setOpenModal(undefined);
       queryClient.invalidateQueries([config.QUERY_KEY.TEACHER]);
+    },
+    onError: (err: any) => {
+      props.setOpenModal(undefined);
+      const { success, errors } = err.response.data as { msg: string; success: boolean; errors: string[] };
+      if (!success) {
+        const errorMsg = errors.map((err) => `${err.split(':')[1]} \n`);
+        errorMsg.forEach((msg) => {
+          toast.error(msg);
+        });
+      }
     },
   });
 
@@ -210,8 +175,6 @@ function FormElements() {
               validationSchema={validationSchema}
               onSubmit={(values) => {
                 addTeacherMutation.mutate(values);
-                console.log(values);
-                console.log('hola');
               }}
             >
               {() => (
@@ -249,13 +212,12 @@ function FormElements() {
 
                   <div>
                     <div className='mb-2 block'>
-                      <Label value='Selecciona los cursos' />
+                      <Label value='Selecciona los grados' />
                     </div>
                     <div className='grid grid-cols-2'>
-                      {/* {degrees?.data.map((degree) => (
-                        <CheckBoxCustom key={degree.id} textLabel={degree.name} name='degrees' value={degree.id} />
-                      ))} */}
-                      <ErrorMessage name='degrees' component='div' />
+                      {degrees?.data.map((degree) => (
+                        <CheckBoxCustom key={degree.id} textLabel={`${degree.name} ${degree.academicLevel}`} name='degrees' value={degree.id} />
+                      ))}
                     </div>
                   </div>
 
@@ -271,24 +233,24 @@ function FormElements() {
                     </div>
 
                     <div>
-                      <SelectCustom textLabel='Nivel de grado' name='degrees'>
-                        {degrees?.data.map((degree) => (
-                          <option value={degree.id} key={degree.id}>
-                            {degree.name} {degree.academicLevel}
+                      <SelectCustom textLabel='Curso a cargo' name='courses'>
+                        {courses?.data.map((course) => (
+                          <option value={course.id} key={course.id}>
+                            {course.name}
                           </option>
                         ))}
                       </SelectCustom>
                     </div>
+                  </div>
 
-                    <div>
-                      <SelectCustom textLabel='Nivel de grado' name='qualifications'>
-                        {qualifications?.data.map((qualification) => (
-                          <option value={qualification.id} key={qualification.id}>
-                            {qualification.name}
-                          </option>
-                        ))}
-                      </SelectCustom>
-                    </div>
+                  <div>
+                    <SelectCustom textLabel='Nivel de Estudios' name='qualifications'>
+                      {qualifications?.data.map((qualification) => (
+                        <option value={qualification.id} key={qualification.id}>
+                          {qualification.name}
+                        </option>
+                      ))}
+                    </SelectCustom>
                   </div>
 
                   <div className='w-full mt-5'>
