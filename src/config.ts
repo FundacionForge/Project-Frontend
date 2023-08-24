@@ -3,6 +3,7 @@ export const config = {
   TOKEN_STORAGE: 'tokenForge',
   QUERY_KEY: {
     STUDENT: 'students',
+    TEACHER: 'teachers',
     SHIFT: 'shifts',
     COURSE: 'courses',
     DEGREE: 'degrees',

@@ -7,8 +7,8 @@ import { getAllDegree } from '@/services/degree.service';
 import { getAllShift } from '@/services/shift.service';
 import { createStudent, deleteStudent, getAllStudent } from '@/services/student.service';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Button, Checkbox, Label, Modal, Select, Table, TextInput } from 'flowbite-react';
-import { Field, Form, Formik } from 'formik';
+import { Button, Label, Modal, Table } from 'flowbite-react';
+import { ErrorMessage, Form, Formik } from 'formik';
 import React from 'react';
 import { RiDeleteBin2Line } from 'react-icons/ri';
 import * as Yup from 'yup';
@@ -85,7 +85,7 @@ const validationSchema = Yup.object().shape({
   motherLastName: Yup.string().required('El apellido materno es requerido'),
   address: Yup.string().required('La dirección es requerida'),
   phoneNumber: Yup.string().required('El celular es requerido'),
-  courses: Yup.string().required('Los cursos son requeridos'),
+  courses: Yup.array().of(Yup.number().required('Cada curso es requerido')).required('Los cursos son requeridos'),
   degrees: Yup.string().required('El grado es requerido'),
   shifts: Yup.string().required('El turno es requerido'),
 });
@@ -98,7 +98,7 @@ const initialValues = {
   motherLastName: '',
   address: '',
   phoneNumber: '',
-  courses: '',
+  courses: [],
   degrees: '',
   shifts: '',
 };
@@ -149,7 +149,7 @@ function FormElements() {
                 console.log('hola');
               }}
             >
-              {({errors, values}) => (
+              {({ errors, values }) => (
                 <Form>
                   <div>
                     <InputCustom textLabel='Correo Electrónico' name='email' type='text' />
@@ -188,18 +188,9 @@ function FormElements() {
                     </div>
                     <div className='grid grid-cols-2'>
                       {courses?.data.map((course) => (
-                        <CheckBoxCustom textLabel={course.name} name={course.name} />
-
-                        // <div key={course.id} className='flex gap-2'>
-                        //   <div className='flex h-5 items-center'>
-                        //     <Field component={Checkbox} id={course.name} name='courses' />
-                        //   </div>
-                        //   <div className='flex flex-col'>
-                        //     <Label htmlFor={course.name}>{course.name}</Label>
-                        //   </div>
-                        // </div>
+                        <CheckBoxCustom key={course.id} textLabel={course.name} name='courses' value={course.id} />
                       ))}
-
+                      <ErrorMessage name='courses' component='div' />
                     </div>
                   </div>
 

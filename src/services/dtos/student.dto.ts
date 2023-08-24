@@ -7,7 +7,7 @@ export interface StudentDto {
   email:            string;
   phoneNumber:      string;
   address:          string;
-  courses:          string;
+  courses:          number[];
   degrees:          string;
   shifts:           string;
 }

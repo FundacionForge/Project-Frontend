@@ -1,24 +1,39 @@
-import { Checkbox, Label } from 'flowbite-react';
 import { useFormikContext } from 'formik';
+import React from 'react';
 
 interface Props {
   name: string;
+  value: any;
   textLabel: string;
 }
-export const CheckBoxCustom = (props: Props) => {
-  const { values, handleChange, touched, errors } = useFormikContext<any>();
-  return (
-    <>
-      <div className='flex gap-2'>
-        <div className='flex h-5 items-center'>
-          <Checkbox name={props.name} value={values[props.name]} id={props.name} onChange={handleChange} />
-        </div>
-        <div className='flex flex-col'>
-          <Label htmlFor={props.name} value={props.textLabel} />
-        </div>
-      </div>
 
-      {errors[props.name] && touched[props.name] && <div className='text-red-500'>{errors[props.name] as any}</div>}
-    </>
+export const CheckBoxCustom = (props: Props) => {
+  const { values, setFieldValue } = useFormikContext<any>();
+  const [isChecked, setIsChecked] = React.useState(values.courses.includes(props.value));
+
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.checked;
+    setIsChecked(newValue);
+
+    if (newValue) {
+      setFieldValue(props.name, [...values.courses, props.value]);
+    } else {
+      setFieldValue(props.name, values.courses.filter((id: any) => id !== props.value));
+    }
+  };
+
+  return (
+    <div>
+      <label>
+        <input
+          type='checkbox'
+          name={props.name}
+          value={props.value}
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+        />
+        {props.textLabel}
+      </label>
+    </div>
   );
 };

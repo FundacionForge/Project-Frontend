@@ -15,7 +15,7 @@ export const InputCustom = (props: Props) => {
         <Label htmlFor={props.name} value={props.textLabel} />
       </div>
       <TextInput type={props.type} name={props.name} value={values[props.name]} id={props.name} onChange={handleChange} />
-      {errors[props.name] && touched[props.name] && <div className='text-red-500'>{errors[props.name] as any}</div>}
+      {errors[props.name] && touched[props.name] && <div className='text-red-500'>{errors[props.name] as string}</div>}
     </>
   );
 };

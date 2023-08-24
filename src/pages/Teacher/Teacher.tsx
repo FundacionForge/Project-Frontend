@@ -1,3 +1,5 @@
+import { config } from '@/config';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Label, Modal, Table, TextInput } from 'flowbite-react';
 import React from 'react';
 import { RiDeleteBin2Line } from 'react-icons/ri';
@@ -69,6 +71,9 @@ const data = [
 ]
 
 export const Teacher: React.FC = () => {
+  const queryClient = useQueryClient();
+
+
   return (
     <div>
         <div className='mb-20 flex justify-between'>
