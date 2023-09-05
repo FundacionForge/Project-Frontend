@@ -1,6 +1,6 @@
 import { axiosClient } from "@/configs/axios.config";
 import { StudentDto } from "./dtos/student.dto";
-import { ResponseStudent } from "./entities/student.entity";
+import { ResponseStudent, Student } from "./entities/student.entity";
 import { generateObjectId } from '../utils/generateObjectId';
 
 const endpoint = `/api/student`;
@@ -20,7 +20,7 @@ export const getAllStudent = async () => {
 }
 
 export const getStudent = async (id: string) => {
-  const { data } = await axiosClient.get<ResponseStudent>(`${endpoint}/${id}`)
+  const { data } = await axiosClient.get<Student>(`${endpoint}/${id}`)
   return data;
 }
 

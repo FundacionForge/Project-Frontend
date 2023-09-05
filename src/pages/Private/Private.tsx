@@ -6,6 +6,7 @@ import { Navigate, Route } from 'react-router-dom';
 import Dashboard from './Dashboard/Dashboard';
 import { Teacher } from '../Teacher/Teacher';
 import { Student } from '../Student/Student';
+import { StudentById } from '../Student/StudentById';
 
 const Private: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const Private: React.FC = () => {
           <Route path={PrivateRoutes.DASHBOARD} element={<Dashboard />} />
           <Route path={PrivateRoutes.TEACHER} element={<Teacher />} />
           <Route path={PrivateRoutes.STUDENT} element={<Student />} />
+          <Route path={`${PrivateRoutes.STUDENT}/:studentId`} element={<StudentById />} />
         </Route>
       </RoutesWithNotFound>
   );

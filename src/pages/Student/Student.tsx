@@ -11,6 +11,7 @@ import { Button, Label, Modal, Table } from 'flowbite-react';
 import { Form, Formik } from 'formik';
 import React from 'react';
 import { RiDeleteBin2Line } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
@@ -51,7 +52,9 @@ export const Student: React.FC = () => {
           {students?.data && students?.data.length > 0 ? (
             students?.data.map((student) => (
               <Table.Row key={student.id}>
-                <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>{student.dni}</Table.Cell>
+                <Link to={`${student.id}`}>
+                  <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>{student.dni}</Table.Cell>
+                </Link>
                 <Table.Cell>
                   {student.name} {student.lastName} {student.motherLastName}
                 </Table.Cell>
@@ -125,6 +128,7 @@ function FormElements() {
       props.setOpenModal(undefined);
       queryClient.invalidateQueries([config.QUERY_KEY.STUDENT]);
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (err: any) => {
       props.setOpenModal(undefined);
       const { success, errors } = err.response.data as { msg: string; success: boolean; errors: string[] };

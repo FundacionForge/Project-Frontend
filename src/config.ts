@@ -7,10 +7,11 @@ export const config = {
     SHIFT: 'shifts',
     COURSE: 'courses',
     DEGREE: 'degrees',
-    QUALIFICATION: 'qualifications'
+    QUALIFICATION: 'qualifications',
+    STUDENT_BY_ID: 'studentById',
   },
   ROLE: {
     ADMIN: 'ROLE_ADMIN',
-    USER: 'ROLE_USER'
-  }
-}
+    USER: 'ROLE_USER',
+  },
+};
