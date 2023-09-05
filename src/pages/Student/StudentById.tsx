@@ -15,8 +15,12 @@ export const StudentById: React.FC = () => {
 
   return (
     <div className='h-screen flex items-center justify-center bg-gray-100'>
-      <div className='bg-white p-8 rounded-lg shadow-lg flex items-center'>
-        <img src='https://img.freepik.com/vector-gratis/ilustracion-concepto-tesis_114360-7560.jpg' alt='Imagen del estudiante' className='w-1/2 h-auto rounded-full mr-4' />
+      <div className='bg-white p-8 rounded-lg shadow-lg flex gap-8 items-center'>
+        <img
+          src='https://img.freepik.com/vector-gratis/linda-estudiante-mascarilla-limpieza-manos-jabon-manos-virus-proteccion-covid19_40876-3285.jpg'
+          alt='Imagen del estudiante'
+          className='w-1/2 h-auto rounded-full mr-4'
+        />
         <div className='w-1/2 grid gap-4'>
           <h2 className='text-4xl font-bold mb-2'>
             {student?.name} {student?.lastName} {student?.motherLastName}

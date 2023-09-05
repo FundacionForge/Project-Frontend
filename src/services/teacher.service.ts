@@ -1,7 +1,7 @@
 import { axiosClient } from '@/configs/axios.config';
-import { TeacherDto } from './dtos/teacher.dto';
-import { ResponseTeacher } from './entities/teacher.entity';
 import { generateObjectId } from '@/utils/generateObjectId';
+import { TeacherDto } from './dtos/teacher.dto';
+import { ResponseTeacher, Teacher } from './entities/teacher.entity';
 
 const endpoint = `/api/teacher`;
 
@@ -9,7 +9,7 @@ export const createTeacher = async (teacher: TeacherDto) => {
   teacher.degrees = generateObjectId(teacher.degrees);
   teacher.shifts = generateObjectId(teacher.shifts);
   teacher.courses = generateObjectId(teacher.courses);
-  teacher.qualifications = generateObjectId(teacher.qualifications);
+  teacher.qualification = generateObjectId(teacher.qualification);
 
   const { data } = await axiosClient.post<ResponseTeacher>(`${endpoint}`, teacher);
   return data;
@@ -21,7 +21,7 @@ export const getAllTeacher = async () => {
 };
 
 export const getTeacher = async (id: string) => {
-  const { data } = await axiosClient.get<ResponseTeacher>(`${endpoint}/${id}`);
+  const { data } = await axiosClient.get<Teacher>(`${endpoint}/${id}`);
   return data;
 };
 

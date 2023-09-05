@@ -53,7 +53,7 @@ export const Student: React.FC = () => {
             students?.data.map((student) => (
               <Table.Row key={student.id}>
                 <Link to={`${student.id}`}>
-                  <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>{student.dni}</Table.Cell>
+                  <Table.Cell className='whitespace-nowrap font-medium dark:text-white text-blue-500 underline'>{student.dni}</Table.Cell>
                 </Link>
                 <Table.Cell>
                   {student.name} {student.lastName} {student.motherLastName}
@@ -84,10 +84,7 @@ export const Student: React.FC = () => {
 const validationSchema = Yup.object().shape({
   dni: Yup.string().required('El DNI no puede estar en blanco').min(8, 'El DNI debe tener exactamente 8 caracteres').max(8, 'El DNI debe tener exactamente 8 caracteres'),
   name: Yup.string().required('El nombre no puede estar en blanco').min(3, 'El nombre debe tener al menos 3 caracteres').max(10, 'El nombre debe tener como máximo 10 caracteres'),
-  lastName: Yup.string()
-    .required('El apellido no puede estar en blanco')
-    .min(3, 'El apellido debe tener al menos 3 caracteres')
-    .max(10, 'El apellido debe tener como máximo 10 caracteres'),
+  lastName: Yup.string().required('El apellido no puede estar en blanco').min(3, 'El apellido debe tener al menos 3 caracteres').max(10, 'El apellido debe tener como máximo 10 caracteres'),
   motherLastName: Yup.string()
     .required('El apellido materno no puede estar en blanco')
     .min(3, 'El apellido materno debe tener al menos 3 caracteres')

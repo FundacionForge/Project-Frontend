@@ -9,6 +9,7 @@ export const config = {
     DEGREE: 'degrees',
     QUALIFICATION: 'qualifications',
     STUDENT_BY_ID: 'studentById',
+    TEACHER_BY_ID: 'teacherById',
   },
   ROLE: {
     ADMIN: 'ROLE_ADMIN',

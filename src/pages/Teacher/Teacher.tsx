@@ -12,6 +12,7 @@ import { Button, Label, Modal, Table } from 'flowbite-react';
 import { Form, Formik } from 'formik';
 import React from 'react';
 import { RiDeleteBin2Line } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
@@ -52,7 +53,9 @@ export const Teacher: React.FC = () => {
           {teachers?.data && teachers?.data.length > 0 ? (
             teachers?.data.map((teacher) => (
               <Table.Row key={teacher.id}>
-                <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>{teacher.dni}</Table.Cell>
+                <Link to={`${teacher.id}`}>
+                  <Table.Cell className='whitespace-nowrap font-medium dark:text-white text-blue-500 underline'>{teacher.dni}</Table.Cell>
+                </Link>
                 <Table.Cell>
                   {teacher.name} {teacher.lastName} {teacher.motherLastName}
                 </Table.Cell>
@@ -82,10 +85,7 @@ export const Teacher: React.FC = () => {
 const validationSchema = Yup.object().shape({
   dni: Yup.string().required('El DNI no puede estar en blanco').min(8, 'El DNI debe tener exactamente 8 caracteres').max(8, 'El DNI debe tener exactamente 8 caracteres'),
   name: Yup.string().required('El nombre no puede estar en blanco').min(3, 'El nombre debe tener al menos 3 caracteres').max(10, 'El nombre debe tener como máximo 10 caracteres'),
-  lastName: Yup.string()
-    .required('El apellido no puede estar en blanco')
-    .min(3, 'El apellido debe tener al menos 3 caracteres')
-    .max(10, 'El apellido debe tener como máximo 10 caracteres'),
+  lastName: Yup.string().required('El apellido no puede estar en blanco').min(3, 'El apellido debe tener al menos 3 caracteres').max(10, 'El apellido debe tener como máximo 10 caracteres'),
   motherLastName: Yup.string()
     .required('El apellido materno no puede estar en blanco')
     .min(3, 'El apellido materno debe tener al menos 3 caracteres')
@@ -99,7 +99,7 @@ const validationSchema = Yup.object().shape({
   degrees: Yup.array().required('El grado no puede estar vacío'),
   courses: Yup.mixed().required('El curso no puede estar vacío'),
   shifts: Yup.mixed().required('El turno no puede estar vacío'),
-  qualifications: Yup.mixed().required('La profesion no puede estar vacío'),
+  qualification: Yup.mixed().required('La profesion no puede estar vacío'),
 });
 
 const initialValues = {
@@ -111,7 +111,7 @@ const initialValues = {
   address: '',
   phoneNumber: '',
   courses: '',
-  qualifications: '',
+  qualification: '',
   degrees: [],
   shifts: '',
 };
@@ -124,10 +124,11 @@ function FormElements() {
   const addTeacherMutation = useMutation({
     mutationFn: createTeacher,
     onSuccess: () => {
-      toast.success('Estudiante creado exitosamente');
+      toast.success('Profesor creado exitosamente');
       props.setOpenModal(undefined);
       queryClient.invalidateQueries([config.QUERY_KEY.TEACHER]);
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (err: any) => {
       props.setOpenModal(undefined);
       const { success, errors } = err.response.data as { msg: string; success: boolean; errors: string[] };
@@ -244,7 +245,7 @@ function FormElements() {
                   </div>
 
                   <div>
-                    <SelectCustom textLabel='Nivel de Estudios' name='qualifications'>
+                    <SelectCustom textLabel='Nivel de Estudios' name='qualification'>
                       {qualifications?.data.map((qualification) => (
                         <option value={qualification.id} key={qualification.id}>
                           {qualification.name}
