@@ -10,7 +10,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Label, Modal, Table } from 'flowbite-react';
 import { Form, Formik } from 'formik';
 import React from 'react';
-import { RiDeleteBin2Line } from 'react-icons/ri';
+import { RiDeleteBin2Line, RiEdit2Line } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
@@ -31,6 +31,13 @@ export const Student: React.FC = () => {
       queryClient.invalidateQueries([config.QUERY_KEY.STUDENT]);
     },
   });
+
+  const handleDeleteClick = (studentId: string) => {
+    const confirmDelete = window.confirm('¿Estás seguro de que deseas eliminar este estudiante?');
+    if (confirmDelete) {
+      deleteStudentMutation.mutate(studentId);
+    }
+  };
 
   return (
     <div>
@@ -62,8 +69,11 @@ export const Student: React.FC = () => {
                 <Table.Cell>{student.phoneNumber}</Table.Cell>
                 <Table.Cell>{student.address}</Table.Cell>
                 <Table.Cell className='flex gap-5 text-center'>
-                  <button onClick={() => deleteStudentMutation.mutate(student.id)} className='font-medium text-red-600 hover:text-red-400 text-[1.25rem]'>
+                  <button onClick={() => handleDeleteClick(student.id)} className='font-medium text-red-600 hover:text-red-400 text-[1.25rem]'>
                     <RiDeleteBin2Line />
+                  </button>
+                  <button className='font-medium text-blue-600 hover:text-blue-400 text-[1.25rem]'>
+                    <RiEdit2Line />
                   </button>
                 </Table.Cell>
               </Table.Row>

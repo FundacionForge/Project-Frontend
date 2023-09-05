@@ -33,6 +33,13 @@ export const Teacher: React.FC = () => {
     },
   });
 
+  const handleDeleteClick = (teacherId: string) => {
+    const confirmDelete = window.confirm('¿Estás seguro de que deseas eliminar este profesor?');
+    if (confirmDelete) {
+      deleteTeacherMutation.mutate(teacherId);
+    }
+  };
+
   return (
     <div>
       <div className='mb-20 flex justify-between'>
@@ -63,7 +70,7 @@ export const Teacher: React.FC = () => {
                 <Table.Cell>{teacher.phoneNumber}</Table.Cell>
                 <Table.Cell>{teacher.address}</Table.Cell>
                 <Table.Cell className='flex gap-5 text-center'>
-                  <button onClick={() => deleteTeacherMutation.mutate(teacher.id)} className='font-medium text-red-600 hover:text-red-400 text-[1.25rem]'>
+                  <button onClick={() => handleDeleteClick(teacher.id)} className='font-medium text-red-600 hover:text-red-400 text-[1.25rem]'>
                     <RiDeleteBin2Line />
                   </button>
                 </Table.Cell>
