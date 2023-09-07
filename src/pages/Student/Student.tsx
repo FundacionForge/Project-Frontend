@@ -28,6 +28,7 @@ export const Student: React.FC = () => {
   const deleteStudentMutation = useMutation({
     mutationFn: deleteStudent,
     onSuccess: () => {
+      toast.success('Estudiante eliminado exitosamente');
       queryClient.invalidateQueries([config.QUERY_KEY.STUDENT]);
     },
   });
