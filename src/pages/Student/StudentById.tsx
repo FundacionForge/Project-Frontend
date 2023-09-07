@@ -36,6 +36,21 @@ export const StudentById: React.FC = () => {
     }
   }, [studentData]);
 
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const data = await getStudent(studentId!);
+        setStudent(data);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        toast.error(error.message);
+      }
+    };
+
+    fetchData();
+  }, [studentId]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setStudent({ ...student, [name]: value });
@@ -45,8 +60,12 @@ export const StudentById: React.FC = () => {
     e.preventDefault();
     try {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      await updateStudent(studentId!, student);
+      const updatedTeacherData = await getStudent(studentId!);
       toast.success('Estudiante actualizado exitosamente');
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      await updateStudent(studentId!, student);
+      setStudent(updatedTeacherData);
+      setUpdate(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(error.message);
@@ -136,7 +155,9 @@ export const StudentById: React.FC = () => {
                     Guardar cambios
                   </button>
 
-                  <button onClick={() => setUpdate(false)} className='bg-red-500 hover:bg-red-400 text-white py-2 px-4 rounded'>Cancelar</button>
+                  <button onClick={() => setUpdate(false)} className='bg-red-500 hover:bg-red-400 text-white py-2 px-4 rounded'>
+                    Volver
+                  </button>
                 </div>
               </form>
             </div>
@@ -152,14 +173,14 @@ export const StudentById: React.FC = () => {
             />
             <div className='w-1/2 grid gap-4'>
               <h2 className='text-4xl font-bold mb-2'>
-                {studentData?.name} {studentData?.lastName} {studentData?.motherLastName}
+                {student?.name} {student?.lastName} {student?.motherLastName}
               </h2>
               <div>
                 <p className='text-xl'>
-                  <span className='font-semibold'>Grado:</span> {studentData?.degrees.name} {studentData?.degrees.academicLevel}
+                  <span className='font-semibold'>Grado:</span> {student?.degrees.name} {student?.degrees.academicLevel}
                 </p>
                 <p className='text-xl'>
-                  <span className='font-semibold'>Salón y Turno:</span> Salón {studentData?.degrees.assignedRoom} - {studentData?.shifts.name}
+                  <span className='font-semibold'>Salón y Turno:</span> Salón {student?.degrees.assignedRoom} - {student?.shifts.name}
                 </p>
               </div>
               <div className='text-gray-600 flex flex-col'>
@@ -172,21 +193,21 @@ export const StudentById: React.FC = () => {
                   </ul>
                 </div>
                 <p>
-                  <span className='font-semibold'>Email: </span> {studentData?.email}
+                  <span className='font-semibold'>Email: </span> {student?.email}
                 </p>
                 <p>
-                  <span className='font-semibold'>DNI: </span> {studentData?.dni}
+                  <span className='font-semibold'>DNI: </span> {student?.dni}
                 </p>
                 <p>
                   <span className='font-semibold'>Número de Teléfono: </span>
-                  <a className='underline' href={`https://api.whatsapp.com/send?phone=${studentData?.phoneNumber}`} target='_blank'>
-                    {studentData?.phoneNumber}
+                  <a className='underline' href={`https://api.whatsapp.com/send?phone=${student?.phoneNumber}`} target='_blank'>
+                    {student?.phoneNumber}
                   </a>
                 </p>
                 <p>
                   <span className='font-semibold'>Dirección:</span>{' '}
-                  <a className='underline' href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(studentData?.address ?? '')}`} target='_blank'>
-                    {studentData?.address}
+                  <a className='underline' href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(student?.address ?? '')}`} target='_blank'>
+                    {student?.address}
                   </a>
                 </p>
               </div>
@@ -198,6 +219,5 @@ export const StudentById: React.FC = () => {
         </div>
       )}
     </>
-    // {update  }
   );
 };

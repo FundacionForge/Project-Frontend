@@ -15,6 +15,11 @@ export const createTeacher = async (teacher: TeacherDto) => {
   return data;
 };
 
+export const updateTeacher = async (id: string, teacher: TeacherDto) => {
+  const { data } = await axiosClient.put<ResponseTeacher>(`${endpoint}/${id}`, teacher);
+  return data;
+};
+
 export const getAllTeacher = async () => {
   const { data } = await axiosClient.get<ResponseTeacher>(`${endpoint}`);
   return data;
