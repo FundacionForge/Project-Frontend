@@ -8,6 +8,7 @@ interface Props {
 }
 
 export const SelectCustom = (props: Props) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { values, handleChange, handleBlur, errors, touched } = useFormikContext<any>();
   return (
     <>
