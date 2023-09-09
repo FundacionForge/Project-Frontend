@@ -146,7 +146,10 @@ function TemplateCardPerson({ type, data }: PersonProps) {
                 </>
               ))
               :
-              "no hay"}
+              <div className="grid justify-items-center items-center">
+                <img className="w-20 h-20 space-y-6" src="https://img.freepik.com/free-icon/surprised_318-463920.jpg?w=2000" alt="profile picture" />
+                <h2 className="my-3 text-black-600 font-bold">No existen {type}, porfavor crea uno</h2>
+              </div>}
         </>
 
         <div className="flex justify-end">
