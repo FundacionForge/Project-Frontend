@@ -7,71 +7,71 @@ import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 export const TeacherById: React.FC = () => {
-    const { teacherId } = useParams();
-    const [update, setUpdate] = React.useState<boolean>(false);
+  const { teacherId } = useParams();
+  const [update, setUpdate] = React.useState<boolean>(false);
 
-    const { data: teacherData } = useQuery({
-      queryKey: [config.QUERY_KEY.TEACHER_BY_ID, teacherId],
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      queryFn: () => getTeacher(teacherId!),
-    });
+  const { data: teacherData } = useQuery({
+    queryKey: [config.QUERY_KEY.TEACHER_BY_ID, teacherId],
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    queryFn: () => getTeacher(teacherId!),
+  });
 
-    const [teacher, setTeacher] = React.useState<TeacherDto>({
-      dni: '',
-      name: '',
-      lastName: '',
-      motherLastName: '',
-      email: '',
-      phoneNumber: '',
-      address: '',
+  const [teacher, setTeacher] = React.useState<TeacherDto>({
+    dni: '',
+    name: '',
+    lastName: '',
+    motherLastName: '',
+    email: '',
+    phoneNumber: '',
+    address: '',
 
-      courses: '',
-      degrees: '',
-      shifts: '',
-      qualification: '',
-    });
+    courses: '',
+    degrees: '',
+    shifts: '',
+    qualification: '',
+  });
 
-    React.useEffect(() => {
-      if (teacherData) {
-        setTeacher(teacherData);
-      }
-    }, [teacherData]);
+  React.useEffect(() => {
+    if (teacherData) {
+      setTeacher(teacherData);
+    }
+  }, [teacherData]);
 
-    React.useEffect(() => {
-      const fetchData = async () => {
-        try {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          const data = await getTeacher(teacherId!);
-          setTeacher(data);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (error: any) {
-          toast.error(error.message);
-        }
-      };
-
-      fetchData();
-    }, [teacherId]);
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      setTeacher({ ...teacher, [name]: value });
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault();
+  React.useEffect(() => {
+    const fetchData = async () => {
       try {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        await updateTeacher(teacherId!, teacher);
-        toast.success('Profesor actualizado exitosamente');
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const updatedTeacherData = await getTeacher(teacherId!);
-        setTeacher(updatedTeacherData);
-        setUpdate(false);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const data = await getTeacher(teacherId!);
+        setTeacher(data);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         toast.error(error.message);
       }
     };
+
+    fetchData();
+  }, [teacherId]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setTeacher({ ...teacher, [name]: value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      await updateTeacher(teacherId!, teacher);
+      toast.success('Profesor actualizado exitosamente');
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const updatedTeacherData = await getTeacher(teacherId!);
+      setTeacher(updatedTeacherData);
+      setUpdate(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <>

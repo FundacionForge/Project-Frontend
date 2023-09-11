@@ -20,11 +20,6 @@ const registers = [
     icon: <RiUser3Line className='text-[1.25rem]' />,
     to: PrivateRoutes.STUDENT,
   },
-  // {
-  //   name: 'Materias',
-  //   icon: <RiSurveyLine className="text-[1.25rem]" />,
-  //   to: PrivateRoutes.COURSES
-  // }
 ];
 
 export const Sidebar: React.FC = () => {
@@ -45,7 +40,9 @@ export const Sidebar: React.FC = () => {
         >
           <div className='text-center p-8'>
             <DarkThemeToggle className='mb-5' />
-            <h1 className='uppercase font-bold tracking-[4px] dark:text-gray-300'>{userState.username}</h1>
+            <Link to='/private/dashboard'>
+              <h1 className='uppercase font-bold tracking-[4px] dark:text-gray-300'>{userState.username}</h1>
+            </Link>
           </div>
           <div className='flex flex-col justify-between h-[800px]'>
             <nav>
