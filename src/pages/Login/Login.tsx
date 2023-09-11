@@ -1,16 +1,16 @@
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
+import { RiGitRepositoryPrivateLine, RiMailLine } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { RiGitRepositoryPrivateLine, RiMailLine } from 'react-icons/ri';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 import { config } from '@/config';
 import { PrivateRoutes, PublicRoutes } from '@/models/routes';
 import { createUser, resetUser } from '@/redux/state/user.slice';
 import { AppDispatch } from '@/redux/store';
-import { clearLocalStorage } from '@/utils/localStorage.util';
 import { loginUser } from '@/services/auth.service';
+import { clearLocalStorage } from '@/utils/localStorage.util';
 
 interface LoginFormValues {
   username: string;
