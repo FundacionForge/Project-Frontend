@@ -9,6 +9,7 @@ import { PrivateRoutes, PublicRoutes } from "./models/routes";
 import { store } from "./redux/store";
 import { RoutesWithNotFound } from "./utils/routes-with-not-found";
 
+
 const Login = React.lazy(() => import('./pages/Login/Login'));
 const Private = React.lazy(() => import('./pages/Private/Private'));
 
