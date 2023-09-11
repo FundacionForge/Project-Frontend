@@ -35,7 +35,7 @@ const Dashboard: FC = () => {
   return (
     <main>
       <h1 className='text-4xl font-bold dark:text-gray-300'>DASHBOARD</h1>
-      <section className='grid grid-cols-1 md:grid-cols-1 xl:grid-cols-4 mt-10 gap-8'>
+      <section className='grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3  mt-10 gap-8'>
         <TemplateCardForge />
         <TemplateCardCourse data={dataCourses?.data} />
       </section>
@@ -61,15 +61,15 @@ function TemplateCardForge() {
 
 function TemplateCardCourse({ data }: CoursesProps) {
   return (
-    <div className='col-span-1 md:col-span-2 flex flex-col'>
+    <div className='col-span-1 md:col-span-2 flex flex-col '>
       <h1 className='text-2xl font-bold mb-8 dark:text-gray-300'>Materias</h1>
-      <div className='bg-white p-8 rounded-xl shadow-2xl' style={{ overflowY: 'scroll', height: '400px' }}>
+      <div className='bg-white p-8 rounded-xl shadow-2xl dark:bg-slate-800 ' style={{ overflowY: 'scroll', height: '400px' }}>
         {data && data.length > 0
           ? data.map((course: Course) => (
               <div key={course.id} className='flex items-center gap-4 mb-8'>
                 <img src={course?.image} className='w-14 h-14 object-cover rounded-full' />
                 <div>
-                  <h3 className='font-bold'>{course?.name}</h3>
+                  <h3 className='font-bold dark:text-white'>{course?.name}</h3>
                   <p className='text-gray-500'>{course?.description}</p>
                 </div>
               </div>
@@ -84,17 +84,17 @@ function TemplateCardStudent({ type, data }: PersonProps) {
   return (
     <div>
       <h1 className='text-2xl font-bold mb-8 dark:text-gray-300'>{type}</h1>
-      <div className='bg-white p-8 rounded-xl shadow-2xl flex flex-col gap-8 w-full'>
+      <div className='bg-white p-8 rounded-xl shadow-2xl flex flex-col gap-8 w-full dark:bg-slate-800'>
         <>
           {data && data?.length > 0 ? (
             data?.slice(0, 2).map((dataValue: any) => (
               <>
-                <div className='grid grid-cols-2 items-center w-full gap-4'>
+                <div className='grid grid-cols-2 items-center w-full gap-4 '>
                   <div className='flex items-center gap-4'>
                     <img src='https://cdn-icons-png.flaticon.com/512/149/149071.png ' className='w-14 h-14 object-cover rounded-xl' />
                     <div>
                       <Link to={`/private/${type === 'Profesores' ? 'teacher' : 'student'}/${dataValue?.id}`}>
-                        <h3 className='font-bold'>
+                        <h3 className='font-bold dark:text-white'>
                           {dataValue?.name} {dataValue?.lastName}
                         </h3>
                       </Link>
@@ -110,11 +110,11 @@ function TemplateCardStudent({ type, data }: PersonProps) {
                     </div>
                   </div>
                   <div className='flex justify-end'>
-                    <span className='badge py-1 px-3 font-small border border-dark-subtle rounded-pill '>{dataValue?.email}</span>
+                    <span className='badge py-1 px-3 font-small border border-dark-subtle rounded-pill dark:text-white '>{dataValue?.email}</span>
                   </div>
                 </div>
                 <div className='flex flex-row items-center w-full '>
-                  <ul className='grid grid-cols-2 gap-4'>
+                  <ul className='grid grid-cols-2 gap-4 w-full'>
                     {dataValue?.courses && dataValue?.courses.length > 0 ? (
                       dataValue?.courses.map((course: any) => (
                         <li>
@@ -160,7 +160,7 @@ function TemplateCardTeacher({ type, data }: PersonProps) {
   return (
     <div>
       <h1 className='text-2xl font-bold mb-8 dark:text-gray-300'>{type}</h1>
-      <div className='bg-white p-8 rounded-xl shadow-2xl mb-8 flex flex-col gap-8'>
+      <div className='bg-white p-8 rounded-xl shadow-2xl mb-8 flex flex-col gap-8 dark:bg-slate-800'>
         <>
           {data && data?.length > 0 ? (
             data?.slice(0, 2).map((dataValue: any) => (
@@ -170,14 +170,14 @@ function TemplateCardTeacher({ type, data }: PersonProps) {
                     <img src='https://cdn-icons-png.flaticon.com/512/149/149071.png ' className='w-14 h-14 object-cover rounded-xl' />
                     <div>
                       <Link to={`/private/${type === 'Profesores' ? 'teacher' : 'student'}/${dataValue?.id}`}>
-                        <h3 className='font-bold'>
+                        <h3 className='font-bold dark:text-white'>
                           {dataValue?.name} {dataValue?.lastName}
                         </h3>
                       </Link>
                       <p className='text-gray-500'>{dataValue.qualification.name}</p>
                     </div>
                   </div>
-                  <div className='flex justify-end'>
+                  <div className='flex justify-end dark:text-white'>
                     <span className='badge py-1 px-3 font-small border border-dark-subtle rounded-pill'>{dataValue?.email}</span>
                   </div>
                 </div>
