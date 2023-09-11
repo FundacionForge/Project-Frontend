@@ -27,7 +27,7 @@ const Login: React.FC = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required('Ingresa tu correo electrónico'),
+    username: Yup.string().required('Ingresa tu usuario'),
     password: Yup.string().required('Ingresa tu contraseña').min(6, 'La contraseña debe tener al menos 6 caracteres'),
   });
 
@@ -70,7 +70,7 @@ const Login: React.FC = () => {
                   <Field
                     name="username"
                     className="w-full border py-2 px-10 rounded-md outline-none"
-                    placeholder="Ingresa tu correo"
+                    placeholder="Ingresa tu usuario"
                   />
                   <RiMailLine className="w-5 h-5 absolute left-2 top-[50%] -translate-y-[50%] text-blue-500" />
                 </div>
